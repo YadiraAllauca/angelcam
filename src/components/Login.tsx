@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import { LoginResponse } from "../interfaces/LoginResponse";
 import { Form, Button, Container, Alert } from "react-bootstrap";
 import { environment } from "../environments/environment";
-
-interface LoginProps {
-  onLogin: (data: LoginResponse) => void;
-}
+import { LoginProps } from "../interfaces/Props";
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const [token, setToken] = useState<string>("");
