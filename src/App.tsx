@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Login from "./components/Login";
 import CameraList from "./components/CameraList";
 import { LoginResponse } from "./interfaces/LoginResponse";
-import { Container, Button, Card, Row, Col, Navbar } from "react-bootstrap";
+import { Container, Button, Card, Navbar, ListGroup } from "react-bootstrap";
 import "./App.css";
 
 const App: React.FC = () => {
@@ -43,25 +43,30 @@ const App: React.FC = () => {
       <Container className="mt-3">
         {userData ? (
           <>
-            <Card className="mb-4 shadow-sm">
+            <Card className="mb-4 shadow-sm rounded">
               <Card.Body>
-                <Card.Title className="text-center">
-                  Welcome, {userData.data.first_name} {userData.data.last_name}!
+                <Card.Title className="text-center mb-4">
+                  <h2>
+                    Welcome, {userData.data.first_name}{" "}
+                    {userData.data.last_name}!
+                  </h2>
                 </Card.Title>
-                <Row className="mt-3">
-                  <Col md={6}>
-                    <Card.Text>Email: {userData.data.email}</Card.Text>
-                    <Card.Text>
-                      My Cameras: {userData.data.my_cameras_count}
-                    </Card.Text>
-                    <Card.Text>
-                      Shared Cameras: {userData.data.shared_cameras_count}
-                    </Card.Text>
-                    <Card.Text>
-                      Total Cameras: {userData.data.total_cameras_count}
-                    </Card.Text>
-                  </Col>
-                </Row>
+                <ListGroup variant="flush">
+                  <ListGroup.Item className="d-flex justify-content-between align-items-center">
+                    <strong>Email</strong> {userData.data.email}
+                  </ListGroup.Item>
+                  <ListGroup.Item className="d-flex justify-content-between align-items-center">
+                    <strong>My cameras</strong> {userData.data.my_cameras_count}
+                  </ListGroup.Item>
+                  <ListGroup.Item className="d-flex justify-content-between align-items-center">
+                    <strong>Shared cameras</strong>{" "}
+                    {userData.data.shared_cameras_count}
+                  </ListGroup.Item>
+                  <ListGroup.Item className="d-flex justify-content-between align-items-center">
+                    <strong>Total cameras</strong>{" "}
+                    {userData.data.total_cameras_count}
+                  </ListGroup.Item>
+                </ListGroup>
               </Card.Body>
             </Card>
             <CameraList token={localStorage.getItem("authToken")} />

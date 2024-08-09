@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { LoginResponse } from "../interfaces/LoginResponse";
-import { Form, Button, Container, Alert } from "react-bootstrap";
+import { Form, Button, Container, Alert, Card } from "react-bootstrap";
 import { environment } from "../environments/environment";
 import { LoginProps } from "../interfaces/Props";
 
@@ -37,24 +37,35 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   };
 
   return (
-    <Container className="mt-5">
-      <h2>Login</h2>
-      {alert && <Alert variant={alert.variant}>{alert.message}</Alert>}
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="formToken">
-          <Form.Label>Personal Access Token</Form.Label>
-          <Form.Control
-            type="text"
-            value={token}
-            onChange={(e) => setToken(e.target.value)}
-            placeholder="Enter your token"
-            className="mb-3"
-          />
-        </Form.Group>
-        <Button variant="primary" type="submit" className="w-25">
-          Login
-        </Button>
-      </Form>
+    <Container className="d-flex justify-content-center align-items-center p-4">
+      <Card
+        style={{ width: "100%", maxWidth: "400px" }}
+        className="p-4 shadow-sm"
+      >
+        <Card.Body>
+          <Card.Title className="text-center mb-4">Login</Card.Title>
+          {alert && (
+            <Alert variant={alert.variant} className="mb-3">
+              {alert.message}
+            </Alert>
+          )}
+          <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="formToken">
+              <Form.Label>Personal Access Token</Form.Label>
+              <Form.Control
+                type="text"
+                value={token}
+                onChange={(e) => setToken(e.target.value)}
+                placeholder="Enter your token"
+                className="mb-3"
+              />
+            </Form.Group>
+            <Button variant="primary" type="submit" className="w-100">
+              Login
+            </Button>
+          </Form>
+        </Card.Body>
+      </Card>
     </Container>
   );
 };
