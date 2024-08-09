@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Card, Container, Row, Col, Spinner, Alert } from "react-bootstrap";
+import { Card, Container, Row, Col, Modal, Button } from "react-bootstrap";
+import LoadingSpinner from "./tools/LoadingSpinner";
+import ErrorAlert from "./tools/ErrorAlert";
 import { Camera } from "../interfaces/Camera";
 import { environment } from "../environments/environment";
 import { CameraListProps } from "../interfaces/Props";
 import "../styles/cameraList.css";
+import CameraLiveStream from "./CameraLiveStream";
 
 const CameraList: React.FC<CameraListProps> = ({ token }) => {
   const [cameras, setCameras] = useState<Camera[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedCameraId, setSelectedCameraId] = useState<number | null>(null);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchCameras = async () => {
@@ -20,13 +25,10 @@ const CameraList: React.FC<CameraListProps> = ({ token }) => {
             Authorization: `PersonalAccessToken ${token}`,
           },
         });
-
         if (!response.ok) {
           throw new Error("Failed to fetch cameras");
         }
-
         const data = await response.json();
-
         if (Array.isArray(data.cameras.results)) {
           setCameras(data.cameras.results);
         } else {
@@ -40,28 +42,27 @@ const CameraList: React.FC<CameraListProps> = ({ token }) => {
         setLoading(false);
       }
     };
-
     if (token) {
       fetchCameras();
     }
   }, [token]);
 
+  const handleShowModal = (cameraId: number) => {
+    setSelectedCameraId(cameraId);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedCameraId(null);
+  };
+
   if (loading) {
-    return (
-      <Container className="mt-5 text-center">
-        <Spinner animation="border" role="status">
-          <span className="sr-only">Loading...</span>
-        </Spinner>
-      </Container>
-    );
+    return <LoadingSpinner />;
   }
 
   if (error) {
-    return (
-      <Container className="mt-5">
-        <Alert variant="danger">{error}</Alert>
-      </Container>
-    );
+    return <ErrorAlert message={error} />;
   }
 
   return (
@@ -76,39 +77,26 @@ const CameraList: React.FC<CameraListProps> = ({ token }) => {
               key={camera.id}
               className="mb-4 d-flex justify-content-center"
             >
-              <Card className="fixed-card">
+              <Card
+                className="fixed-card"
+                onClick={() => handleShowModal(camera.id)}
+              >
                 <Card.Img
                   variant="top"
                   src={camera.live_snapshot}
                   alt={`Snapshot of ${camera.name}`}
                 />
                 <Card.Body>
-                  <Card.Title>{camera.name}</Card.Title>
-                  <Card.Text>Status: {camera.status}</Card.Text>
-                  <Card.Text>
-                    Live View:{" "}
+                  <Card.Title className="text-center mb-2">
+                    {camera.name}
+                  </Card.Title>
+                  <Card.Text className="text-muted">
+                    <strong>Status:</strong> {camera.status}
+                  </Card.Text>
+                  <Card.Text className="text-muted">
+                    <strong>Live View:</strong>{" "}
                     {camera.live_snapshot ? "Available" : "Not available"}
                   </Card.Text>
-                  <Card.Text>Type: {camera.type}</Card.Text>
-                  {camera.streams.length > 0 && (
-                    <Card.Text>
-                      Streams:
-                      <ul>
-                        {camera.streams.map((stream, index) => (
-                          <li key={index}>
-                            {stream.format}:{" "}
-                            <a
-                              href={stream.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              View Stream
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </Card.Text>
-                  )}
                 </Card.Body>
               </Card>
             </Col>
@@ -119,6 +107,23 @@ const CameraList: React.FC<CameraListProps> = ({ token }) => {
           </Col>
         )}
       </Row>
+
+      {/* Modal for live stream */}
+      <Modal show={showModal} onHide={handleCloseModal} size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>Live Stream</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {selectedCameraId && (
+            <CameraLiveStream cameraId={selectedCameraId} token={token || ""} />
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };

@@ -1,50 +1,42 @@
 .fixed-card {
-  width: 300px; /* Ajusta el ancho según sea necesario */
-  height: 400px; /* Ajusta la altura según sea necesario */
+  cursor: pointer;
+  width: 400px; 
+  height: 400px; 
   display: flex;
   flex-direction: column;
-  border: none; /* Elimina el borde predeterminado */
-  border-radius: 15px; /* Bordes redondeados */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra sutil */
-  overflow: hidden; /* Oculta el desbordamiento */
-  transition: transform 0.2s, box-shadow 0.2s; /* Transición para el efecto hover */
+  border: none; 
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .fixed-card:hover {
-  transform: scale(1.05); /* Efecto de zoom al pasar el ratón */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .fixed-card .card-img-top {
-  object-fit: cover; /* Asegura que la imagen se ajuste sin distorsionarse */
-  height: 200px; /* Ajusta la altura de la imagen */
+  object-fit: cover; 
+  height: 200px; 
 }
 
 .card-body {
-  background-color: #f9f9f9; /* Color de fondo de la tarjeta */
-  padding: 15px; /* Espaciado interno */
-  border-top: 1px solid #ddd; /* Línea divisoria entre la imagen y el cuerpo */
+  background-color: #f9f9f9; 
+  padding: 15px; 
+  border-top: 1px solid #ddd;
 }
 
 .card-title {
-  font-size: 1.25rem; /* Tamaño del título */
-  font-weight: bold; /* Negrita para el título */
+  font-size: 1.25rem; 
+  font-weight: bold;
 }
 
 .card-text {
-  color: #333; /* Color del texto */
-  font-size: 0.875rem; /* Tamaño del texto */
+  color: #333; 
+  font-size: 0.875rem; 
 }
 
 .card-text ul {
-  padding-left: 20px; /* Espaciado a la izquierda para la lista */
-}
-
-.card-text a {
-  color: #007bff; /* Color del enlace */
-  text-decoration: none; /* Sin subrayado */
-}
-
-.card-text a:hover {
-  text-decoration: underline; /* Subrayado al pasar el ratón */
+  padding-left: 20px; 
 }
