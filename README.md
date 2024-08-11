@@ -19,7 +19,7 @@ Make sure you have the following configured:
 - [React - Vite](https://vitejs.dev/)<br>
   💡 Ensure you are familiar with React and have [Node.js](https://nodejs.org/) installed on your system.
   
-- [Repository - Backend](https://github.com/a/angelcam_back) <br>
+- [Repository - Backend](https://github.com/YadiraAllauca/angelcam_back) <br>
   This is made with Node.js. Remember to review the documentation.
 
 -  Personal Token<br>
