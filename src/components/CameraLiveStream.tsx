@@ -57,11 +57,15 @@ const CameraLiveStream: React.FC<CameraLiveStreamProps> = ({
       );
       if (!response.ok) throw new Error("Failed to fetch stream details");
       const data = await response.json();
-      const stream = data.stream_details.find(
-        (stream: StreamDetails) =>
-          stream.format === "mp4" || stream.format === "mjpeg"
+
+      const mp4Stream = data.stream_details.find(
+        (stream: StreamDetails) => stream.format === "mp4"
       );
-      setSelectedStream(stream || null);
+      const mjpegStream = data.stream_details.find(
+        (stream: StreamDetails) => stream.format === "mjpeg"
+      );
+
+      setSelectedStream(mp4Stream || mjpegStream || null);
     } catch (error) {
       setError(
         error instanceof Error ? error.message : "An unknown error occurred."
