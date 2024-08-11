@@ -30,7 +30,7 @@ Make sure you have the following configured:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/YadiraAllauca/angelcam
+git clone https://github.com/YadiraAllauca/angelcam.git
 ```
 
 2. Install the dependencies with:
